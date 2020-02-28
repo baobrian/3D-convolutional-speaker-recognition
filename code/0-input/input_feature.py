@@ -187,11 +187,11 @@ class Compose(object):
     Args:
         transforms (list of ``Transform`` objects): list of transforms to compose.
     Example:
-        >>> Compose([
-        >>>     CMVN(),
-        >>>     Feature_Cube(cube_shape=(20, 80, 40),
-        >>>     augmentation=True), ToOutput(),
-        >>>        ])
+        # >>> Compose([
+        # >>>     CMVN(),
+        # >>>     Feature_Cube(cube_shape=(20, 80, 40),
+        # >>>     augmentation=True), ToOutput(),
+        # >>>        ])
         If necessary, for the details of this class, please refer to Pytorch documentation.
     """
 
@@ -222,12 +222,12 @@ if __name__ == '__main__':
     # Example of each line: 0 subject/sound.wav
     parser.add_argument('--file_path',
                         default=os.path.expanduser(
-                            '~/github/3D-convolutional-speaker-recognition/code/0-input/file_path.txt'),
+                            './3D-convolutional-speaker-recognition/code/0-input/file_path.txt'),
                         help='The file names for development phase')
 
     # The directory of the audio files separated by subject
     parser.add_argument('--audio_dir',
-                        default=os.path.expanduser('~/github/3D-convolutional-speaker-recognition/code/0-input/Audio'),
+                        default=os.path.expanduser('./3D-convolutional-speaker-recognition/code/0-input/Audio'),
                         help='Location of sound files')
     args = parser.parse_args()
 

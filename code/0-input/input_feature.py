@@ -222,12 +222,12 @@ if __name__ == '__main__':
     # Example of each line: 0 subject/sound.wav
     parser.add_argument('--file_path',
                         default=os.path.expanduser(
-                            './3D-convolutional-speaker-recognition/code/0-input/file_path.txt'),
+                            './file_path.txt'),
                         help='The file names for development phase')
 
     # The directory of the audio files separated by subject
     parser.add_argument('--audio_dir',
-                        default=os.path.expanduser('./3D-convolutional-speaker-recognition/code/0-input/Audio'),
+                        default=os.path.expanduser('./Audio'),
                         help='Location of sound files')
     args = parser.parse_args()
 
@@ -237,7 +237,12 @@ if __name__ == '__main__':
     # idx is the representation of the batch size which chosen to be as one sample (index) from the data.
     # ex: batch_features = [dataset.__getitem__(idx)[0] for idx in range(32)] 
     # The batch_features is a list and len(batch_features)=32.
+    batch_features = [dataset.__getitem__(idx)[0] for idx in range(5)]
+    batch_labels=[dataset.__getitem__(idx)[1] for idx in range(5)]
     idx = 0
     feature, label = dataset.__getitem__(idx)
     print(feature.shape)
+    print(feature[0].shape)
     print(label)
+    bb=label[:]
+    pass

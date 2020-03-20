@@ -199,7 +199,7 @@ def main(_):
         #############################
         tower_grads = []
         with tf.variable_scope(tf.get_variable_scope()):
-            for i in xrange(FLAGS.num_clones):
+            for i in range(FLAGS.num_clones):
                 with tf.device('/gpu:%d' % i):
                     with tf.name_scope('%s_%d' % ('tower', i)) as scope:
                         """
@@ -363,6 +363,7 @@ def main(_):
                 score = cosine_similarity(feature_vector[i:i+1,:], model)
                 score_vector[i*NumClasses + j] = score
                 # print(score)
+                gg=label_vector[i,:]
                 if (j+1) == label_vector[i,:]:
                     target_label_vector[i*NumClasses + j] = 1
                 else:

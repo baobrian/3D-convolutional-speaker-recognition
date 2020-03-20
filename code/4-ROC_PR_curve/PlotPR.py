@@ -44,7 +44,7 @@ def Plot_PR_Fn(label,distance,phase):
 if __name__ == '__main__':
    
     tf.app.flags.DEFINE_string(
-    'evaluation_dir', '../../results/SCORES',
+    'evaluation_dir', '../../results/ROC',
     'Directory where checkpoints and event logs are written to.')
     
     tf.app.flags.DEFINE_string(
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     # Loading necessary data.
     score = np.load(os.path.join(FLAGS.evaluation_dir,'score_vector.npy'))
     label = np.load(os.path.join(FLAGS.evaluation_dir,'target_label_vector.npy'))
-    save_path = os.path.join(FLAGS.plot_dir,'PR.jpg')
+    save_path = os.path.join(FLAGS.plot_dir,'PR.png')
     
     # Creating the path
     if not os.path.exists(FLAGS.plot_dir):

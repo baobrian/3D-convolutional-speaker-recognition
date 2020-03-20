@@ -35,7 +35,7 @@ def Plot_HIST_Fn(label,distance, save_path, num_bins = 50):
 if __name__ == '__main__':
    
     tf.app.flags.DEFINE_string(
-    'evaluation_dir', '../../results/SCORES',
+    'evaluation_dir', '../../results/ROC',
     'Directory where checkpoints and event logs are written to.')
     
     tf.app.flags.DEFINE_string(

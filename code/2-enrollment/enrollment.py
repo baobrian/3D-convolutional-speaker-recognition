@@ -198,7 +198,7 @@ def main(_):
         #############################
         tower_grads = []
         with tf.variable_scope(tf.get_variable_scope()):
-            for i in xrange(FLAGS.num_clones):
+            for i in range(FLAGS.num_clones):
                 with tf.device('/gpu:%d' % i):
                     with tf.name_scope('%s_%d' % ('tower', i)) as scope:
                         """
@@ -283,20 +283,33 @@ def main(_):
             # The contributung number of utterances
             NumUtterance = 20
             # Get the indexes for each speaker in the enrollment data
+            cc=np.where(fileh.root.label_enrollment[:] == speaker_class)
             speaker_index = np.where(fileh.root.label_enrollment[:] == speaker_class)[0]
 
-            # Check the minumum required utterances per speaker.
-            assert len(speaker_index) >= NumUtterance, "At least %d utterances is needed for each speaker" % NumUtterance
+            if not len(speaker_index)>=NumUtterance:
+                # Get the indexes.
+                start_idx = speaker_index[0]
+                end_idx = min(speaker_index[0] + len(speaker_index), speaker_index[-1])
 
-            # Get the indexes.
-            start_idx = speaker_index[0]
-            end_idx = min(speaker_index[0] + NumUtterance, speaker_index[-1])
+                speaker_enrollment, label_enrollment = fileh.root.utterance_enrollment[start_idx:end_idx, :, :,
+                                                       0:1], fileh.root.label_enrollment[start_idx:end_idx]
+                dd=speaker_enrollment[0:3,:,:,0:1]
+                speaker_enrollment=np.append(speaker_enrollment,dd,axis=0)
+                ff=label_enrollment[0:3]
+                label_enrollment=np.append(label_enrollment,label_enrollment[0:3],axis=0)
+            else:
+                # Check the minumum required utterances per speaker.
+                assert len(speaker_index) >= NumUtterance, "At least %d utterances is needed for each speaker" % NumUtterance
 
-            # print(end_idx-start_idx)
+                # Get the indexes.
+                start_idx = speaker_index[0]
+                end_idx = min(speaker_index[0] + NumUtterance, speaker_index[-1])
 
-            # Enrollment of the speaker with specific number of utterances.
-            speaker_enrollment, label_enrollment = fileh.root.utterance_enrollment[start_idx:end_idx, :, :,
-                                                     0:1], fileh.root.label_enrollment[start_idx:end_idx]
+                # print(end_idx-start_idx)
+
+                # Enrollment of the speaker with specific number of utterances.
+                speaker_enrollment, label_enrollment = fileh.root.utterance_enrollment[start_idx:end_idx, :, :,
+                                                         0:1], fileh.root.label_enrollment[start_idx:end_idx]
 
             # Just adding a dimention for 3D convolutional operations.
             speaker_enrollment = speaker_enrollment[None, :, :, :, :]

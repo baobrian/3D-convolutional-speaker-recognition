@@ -44,7 +44,7 @@ def Plot_ROC_Fn(label,distance,save_path):
     plt.ylabel('True Positive Rate')
 
     # # Cutting the floating number
-    # AUC = '%.2f' % AUC
+    # AUC = '%.2f' % AUC，
     # EER = '%.2f' % EER
     # # AP = '%.2f' % AP
     #
@@ -59,7 +59,7 @@ def Plot_ROC_Fn(label,distance,save_path):
 if __name__ == '__main__':
     
     tf.app.flags.DEFINE_string(
-    'evaluation_dir', '../../results/SCORES',
+    'evaluation_dir', '../../results/ROC',
     'Directory where checkpoints and event logs are written to.')
     
     tf.app.flags.DEFINE_string(
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     # Loading scores and labels
     score = np.load(os.path.join(FLAGS.evaluation_dir,'score_vector.npy'))
     label = np.load(os.path.join(FLAGS.evaluation_dir,'target_label_vector.npy'))
-    save_path = os.path.join(FLAGS.plot_dir,'ROC.jpg')
+    save_path = os.path.join(FLAGS.plot_dir,'ROC.PNG')
     
     # Creating the path
     if not os.path.exists(FLAGS.plot_dir):

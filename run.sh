@@ -6,6 +6,7 @@ else
     # assign the default values to variables
     do_training='train'
     development_dataset='data/development_sample_dataset_speaker.hdf5'
+
     enrollment_dataset='data/enrollment-evaluation_sample_dataset.hdf5'
     evaluation_dataset='data/enrollment-evaluation_sample_dataset.hdf5'
 fi
@@ -13,14 +14,17 @@ fi
 if [ $do_training = 'train' ]; then
 
     # development
+    echo "="*10+"Begin development"+"="*10
     python -u ./code/1-development/train_softmax.py --num_epochs=1 --batch_size=3 --development_dataset_path=$development_dataset --train_dir=results/TRAIN_CNN_3D/train_logs
-
+    echo "="*10+"Finished development"+"="*10
     # enrollment - Automatically restore the latest checkpoint from all saved checkpoints
+    echo "="*10+"Begin enrollment"+"="*10
     python -u ./code/2-enrollment/enrollment.py --development_dataset_path=$development_dataset --enrollment_dataset_path=$enrollment_dataset --checkpoint_dir=results/TRAIN_CNN_3D/ --enrollment_dir=results/Model
-
+    echo "="*10+"Finished enrollment"+"="*10
     # evaluation
+    echo "="*10+"Begin evaluation"+"="*10
     python -u ./code/3-evaluation/evaluation.py --development_dataset_path=$development_dataset --evaluation_dataset_path=$evaluation_dataset --checkpoint_dir=results/TRAIN_CNN_3D/ --evaluation_dir=results/SCORES --enrollment_dir=results/Model
-
+    echo "="*10+"Finished evaluation"+"="*10
     # ROC curve
     python -u ./code/4-ROC_PR_curve/calculate_roc.py --evaluation_dir=results/SCORES
 
